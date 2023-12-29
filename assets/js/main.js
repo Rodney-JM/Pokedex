@@ -1,14 +1,13 @@
-const offset = 0;
-const limit = 6;
-const url = `https://pokeapi.co/api/v2/pokemon/?offset=${offseat}&limit=${limit}`;
+let offset = 0;
+const limit = 10;
 const pokemonList = document.getElementById("pokemonList");
 const loadMoreButton = document.getElementById("load-more");
 
 function loadPokemonItems(offset, limit){
 
-    pokeApi.getPokemons()
+    pokeApi.getPokemons(offset, limit)
         .then((pokemons = [])=> { 
-        pokemonList.innerHTML = pokemons.map((pokemon)=> `
+        const newHtml = pokemons.map((pokemon)=> `
             <li class="pokemon ${pokemon.type}">
             <span class="number">#${pokemon.number}</span>
             <span class="name">${pokemon.name}</span>
@@ -25,11 +24,11 @@ function loadPokemonItems(offset, limit){
 })//O segundo then recebe o retorno do primeiro
 }
 
-loadPokemonItems(limit, offset);
+loadPokemonItems(offset, limit);
 
 loadMoreButton.addEventListener('click', ()=>{
     offset +=limit;
-    loadPokemonItems(limit, offset)
+    loadPokemonItems(offset, limit)
 })
 
 
